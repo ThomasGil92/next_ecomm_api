@@ -6,7 +6,7 @@ const { registerEmailParamsForUser } = require("../utils/email");
 AWS.config.update({
   accessKeyId: process.env.AWS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  /* region: process.env.AWS_REGION, */
+  region: process.env.AWS_REGION,
 });
 
 const ses = new AWS.SES({ apiVersion: "2010-12-01" });
@@ -69,6 +69,7 @@ exports.userEmailConfirmation = async (req, res) => {
     email,
     password,
   } = req.body.userFields;
+  console.log(req.body.userFields)
   const user = await User.findOne({ email });
   if (user !== null) {
     return res.status(400).json({ error: "This user already exist" });

@@ -13,7 +13,7 @@ const ses = new AWS.SES({ apiVersion: "2010-12-01" });
 
 exports.userById = async (req, res) => {
   const id = req.params.userId;
-  console.log("id:",id)
+  console.log("id:", id);
   try {
     User.findById(id).exec((err, user, next) => {
       console.log(user);
@@ -24,7 +24,7 @@ exports.userById = async (req, res) => {
       }
       req.user = user;
 
-      return res.status(200).json({user});
+      return res.status(200).json({ user });
     });
   } catch (err) {
     return res.status(400).json(err);
@@ -69,7 +69,6 @@ exports.userEmailConfirmation = async (req, res) => {
     email,
     password,
   } = req.body.userFields;
-  console.log(req.body.userFields)
   const user = await User.findOne({ email });
   if (user !== null) {
     return res.status(400).json({ error: "This user already exist" });
@@ -90,8 +89,6 @@ exports.userEmailConfirmation = async (req, res) => {
       expiresIn: "10m",
     },
   );
-  console.log(token);
-  console.log(req.body);
   const params = registerEmailParamsForUser(email, token);
   console.log(params);
   var sendEmailOnRegister = ses.sendEmail(params).promise();
@@ -105,7 +102,8 @@ exports.userEmailConfirmation = async (req, res) => {
     .catch((error) => {
       console.log("ses email on register", error);
       res.json({
-        message: `We could not verify your email. Please try again`,error
+        message: `We could not verify your email. Please try again`,
+        error,
       });
     });
 };

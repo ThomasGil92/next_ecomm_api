@@ -104,7 +104,7 @@ exports.userEmailConfirmation = async (req, res) => {
     .catch((error) => {
       console.log("ses email on register", error);
       res.json({
-        message: `We could not verify your email. Please try again`,
+        message: `We could not verify your email. Please try again`,error
       });
     });
 };

@@ -1,11 +1,8 @@
 const Category = require("../models/Category");
 
-exports.getCategories = (req, res) => {
-  /* const categories = Category.find();
-  return res.json(categories); */
-  Category.find().exec((err,category)=>{
-    return res.status(200).json(category)
-  })
+exports.getCategories = async (req, res) => {
+  const categories = await Category.find();
+  return res.json(categories);
 };
 
 exports.getCategoryById=async(req,res)=>{

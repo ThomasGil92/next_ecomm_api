@@ -10,7 +10,7 @@ exports.updateProduct = async (req, res) => {
     const product = await Product.findOneAndUpdate(
       req.body.toUpdate._id,
       req.body.toUpdate,
-      { new: true },
+      { upsert: true },
     );
     if (!product) {
       console.log("Product not found");

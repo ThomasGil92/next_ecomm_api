@@ -8,13 +8,15 @@ exports.getProducts = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   try {
     const product = await Product.findOneAndUpdate(
-      req.body.toUpdate._id,
-      req.body.toUpdate,
-      { upsert: true },
+      { _id: req.body.toUpdate._id },
+      {
+        $set: req.body.toUpdate,
+      },
     );
     if (!product) {
       console.log("Product not found");
     }
+    console.log(product);
     return res.status(200).json({
       product,
     });

@@ -30,7 +30,12 @@ exports.updateStockProduct = async (req, res) => {
   try {
     const product = await Product.findOneAndUpdate(
       { _id: req.body.product._id },
-      {$set:{'product.stock':product.stock - req.body.product.quantityInCart}}
+      {
+        $set: {
+          "product.stock": "product.stock - req.body.product.quantityInCart",
+        },
+      },
+      { upsert: true, new: true },
     );
     if (!product) {
       console.log("Product not found");

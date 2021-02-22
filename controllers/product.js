@@ -32,7 +32,7 @@ exports.updateStockProduct = async (req, res) => {
       { _id: req.body.product._id },
       {
         $set: {
-          "product.stock": "product.stock - req.body.product.quantityInCart",
+          "product.stock": "product.stock" - "req.body.product.quantityInCart",
         },
       },
       { upsert: true, new: true },

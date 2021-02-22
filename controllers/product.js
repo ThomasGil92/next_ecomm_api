@@ -28,21 +28,26 @@ exports.updateProduct = async (req, res) => {
 
 exports.updateStockProduct = async (req, res) => {
   try {
-    const product = await Product.findOneAndUpdate(
+    const product = await Product.findOne(
       { _id: req.body.product._id },
-      {
+      /* {
         $set: {
-          "product.stock": "product.stock" - "req.body.product.quantityInCart",
+          "product.stock": product.stock - req.body.product.quantityInCart,
         },
-      },
-      { upsert: true, new: true },
+      }, */
     );
     if (!product) {
       console.log("Product not found");
     }
-    console.log(product);
-    return res.status(200).json({
-      product,
+    product.stock = product.stock - req.body.product.quantityInCart;
+    product.save((err, updatedProduct) => {
+      if (err) {
+        return res.status(400).json({ err });
+      }
+      return res.status(200).json({
+        product,
+        updatedProduct,
+      });
     });
   } catch (err) {
     res.status(400).json(err);

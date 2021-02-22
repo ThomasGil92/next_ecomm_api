@@ -151,7 +151,6 @@ exports.saveNewOrder = async (req, res) => {
               error: err,
             });
           }
-          console.log(userUpdated);
         });
         return res.status(200).json({
           message: "Order have been successfully saved.",

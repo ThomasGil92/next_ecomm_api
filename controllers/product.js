@@ -26,6 +26,25 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
+exports.updateStockProduct = async (req, res) => {
+  try {
+    const product = await Product.findOneAndUpdate(
+      { _id: req.body.product._id },
+      product.stock - req.body.product.quantityInCart,
+    );
+    if (!product) {
+      console.log("Product not found");
+    }
+    console.log(product);
+    return res.status(200).json({
+      product,
+    });
+  } catch (err) {
+    res.status(400).json(err);
+    console.log(err);
+  }
+};
+
 exports.addProduct = async (req, res) => {
   const {
     productName,
